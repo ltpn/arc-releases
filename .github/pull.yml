@@ -1,0 +1,5 @@
+# https://github.com/wei/pull
+version: "1"
+rules:
+  - mergeMethod: merge
+    conflictReviewers: [ddelange]

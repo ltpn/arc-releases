@@ -33,8 +33,8 @@ on:
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  TARGET_ORG: actions-runner-controller
-  TARGET_REPO: actions-runner-controller
+  TARGET_ORG: ${{ github.repository_owner }}
+  TARGET_REPO: actions-runner-controller-releases
 
 concurrency:
   group: ${{ github.workflow }}
@@ -106,6 +106,10 @@ jobs:
           repository: actions/actions-runner-controller
           path: arc/
           ref: ${{ inputs.sha }}
+
+      - name: Patch nvidia/cuda ubuntu
+        run: find . -name '*.dockerfile' -exec sed -i 's/FROM ubuntu\:/FROM nvidia\/cuda\:11\.7\.1-cudnn8-runtime-ubuntu/g' '{}' \;
+        working-directory: arc/
 
       - name: Export env vars
         run: |
