@@ -32,7 +32,6 @@ on:
         default: false
 
 env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   TARGET_ORG: ${{ github.repository_owner }}
   TARGET_REPO: arc-releases
 
@@ -95,8 +94,6 @@ jobs:
       - name: Setup Docker Environment
         uses: ./.github/actions/setup-docker-environment
         with:
-          username: ${{ env.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
           ghcr_username: ${{ github.actor }}
           ghcr_password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -114,7 +111,6 @@ jobs:
       - name: Export env vars
         run: |
             echo "SHA_SHORT=$(git -C $GITHUB_WORKSPACE/arc rev-parse --short HEAD)" >> $GITHUB_ENV
-            echo "LATEST_TAG_DOCKER=${{ env.DOCKERHUB_USERNAME }}/${{ matrix.name }}:latest" >> $GITHUB_ENV
             echo "LATEST_TAG_GHCR=ghcr.io/${{ env.TARGET_ORG }}/${{ env.TARGET_REPO }}/${{ matrix.name }}:latest" >> $GITHUB_ENV
 
       - name: Build and Push Versioned Tags
@@ -130,10 +126,6 @@ jobs:
             DOCKER_VERSION=${{ inputs.docker_version }}
             RUNNER_CONTAINER_HOOKS_VERSION=${{ inputs.runner_container_hooks_version }}
           tags: |
-            ${{ env.DOCKERHUB_USERNAME }}/${{ matrix.name }}:${{ matrix.os-name }}-${{ matrix.os-version }}
-            ${{ env.DOCKERHUB_USERNAME }}/${{ matrix.name }}:v${{ inputs.runner_version }}-${{ matrix.os-name }}-${{ matrix.os-version }}
-            ${{ env.DOCKERHUB_USERNAME }}/${{ matrix.name }}:v${{ inputs.runner_version }}-${{ matrix.os-name }}-${{ matrix.os-version }}-${{ env.SHA_SHORT }}
-            ${{ matrix.latest == 'true' && env.LATEST_TAG_DOCKER || '' }}
             ghcr.io/${{ env.TARGET_ORG }}/${{ env.TARGET_REPO }}/${{ matrix.name }}:${{ matrix.os-name }}-${{ matrix.os-version }}
             ghcr.io/${{ env.TARGET_ORG }}/${{ env.TARGET_REPO }}/${{ matrix.name }}:v${{ inputs.runner_version }}-${{ matrix.os-name }}-${{ matrix.os-version }}
             ghcr.io/${{ env.TARGET_ORG }}/${{ env.TARGET_REPO }}/${{ matrix.name }}:v${{ inputs.runner_version }}-${{ matrix.os-name }}-${{ matrix.os-version }}-${{ env.SHA_SHORT }}

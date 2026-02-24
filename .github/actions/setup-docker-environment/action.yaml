@@ -1,12 +1,6 @@
 name: "Setup Docker"
 
 inputs:
-  username:
-    description: "Username"
-    required: true
-  password:
-    description: "Password"
-    required: true
   ghcr_username:
     description: "GHCR username. Usually set from the github.actor variable"
     required: true
@@ -37,13 +31,6 @@ runs:
         # failures pushing images to GHCR
         version: v0.9.1
         driver-opts: image=moby/buildkit:v0.10.6
-
-    - name: Login to DockerHub
-      if: ${{ github.event_name == 'release' || github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch' }}
-      uses: docker/login-action@v2
-      with:
-        username: ${{ inputs.username }}
-        password: ${{ inputs.password }}
 
     - name: Login to GitHub Container Registry
       if: ${{ github.event_name == 'release' || github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch' }}
