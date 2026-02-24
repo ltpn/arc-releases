@@ -134,6 +134,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: New branch
         run: git checkout -b update-runner-versions-"$(date +%Y-%m-%d)"
