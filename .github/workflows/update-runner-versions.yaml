@@ -5,6 +5,7 @@
 name: Update Runner Versions (Scheduled)
 
 permissions:
+  actions: write
   pull-requests: write
   contents: write
 
