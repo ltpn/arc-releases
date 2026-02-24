@@ -105,7 +105,7 @@ jobs:
           ref: ${{ inputs.sha }}
 
       - name: Patch nvidia/cuda ubuntu
-        run: find . -name '*.dockerfile' -exec sed -i 's/FROM ubuntu\:/FROM nvidia\/cuda\:12\.9\.1-cudnn-runtime-ubuntu24.04/g' '{}' \;
+        run: find . -name '*.dockerfile' -exec sed -i 's/FROM ubuntu\:/FROM nvidia\/cuda\:12\.9\.1-cudnn-runtime-ubuntu/g' '{}' \;
         working-directory: arc/
 
       - name: Export env vars
