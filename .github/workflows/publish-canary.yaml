@@ -20,8 +20,8 @@ permissions:
   packages: write
 
 env:
-  TARGET_ORG: actions-runner-controller
-  TARGET_REPO: actions-runner-controller
+  TARGET_ORG: ${{ github.repository_owner }}
+  TARGET_REPO: arc-releases
 
 concurrency:
   group: ${{ github.workflow }}
