@@ -169,4 +169,7 @@ jobs:
           git push -u origin HEAD
 
       - name: Create pull request
-        run: gh pr create -f -l "runners update"
+        run: |
+          # Create the label if it doesn't exist; '|| true' ensures the step doesn't fail if it's already there
+          gh label create "runners update" --color "0075ca" --description "Automated runner updates" || true
+          gh pr create -f -l "runners update"
