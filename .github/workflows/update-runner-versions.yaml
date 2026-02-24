@@ -123,7 +123,7 @@ jobs:
       pull-requests: write
       contents: write
     env:
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       RUNNER_CURRENT_VERSION: ${{ needs.check_versions.outputs.runner_current_version }}
       RUNNER_LATEST_VERSION: ${{ needs.check_versions.outputs.runner_latest_version }}
       DOCKER_CURRENT_VERSION: ${{ needs.check_versions.outputs.docker_current_version }}
