@@ -2,4 +2,4 @@
 version: "1"
 rules:
   - mergeMethod: merge
-    conflictReviewers: [ddelange]
+    conflictReviewers: [matteosecli]
